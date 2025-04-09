@@ -149,8 +149,8 @@ Acesse a API em `http://localhost:8000` e a documentação interativa em `http:/
 
 ## 👥 Autores
 
-- [Autor 1](https://github.com/wellingtonspdev)
-- [Autor 2](https://github.com/kaua-hiro)
+- [Wellington Siqueira Porto](https://github.com/wellingtonspdev)
+- [Kauã Hiro](https://github.com/kaua-hiro)
 
 ---
 
