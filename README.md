@@ -12,7 +12,7 @@ Sistema completo para gerenciamento de produtos e usuários com API RESTful e in
 
 ## 🛠️ Stack Tecnológica
 
-- **Backend**: FastAPI (Python 3.8+)
+- **Backend**: FastAPI (Python 3)
 - **Banco de Dados**: MySQL (MySQL Workbench)
 - **ORM**: SQLAlchemy
 - **Templates**: Jinja2
@@ -70,7 +70,7 @@ projeto_gestao/
 1. **Requisição** chega à rota correspondente
 2. **Controller** processa a requisição
 3. **Model** interage com o banco via SQLAlchemy
-4. **Resposta** é renderizada (HTML) ou retornada (JSON)
+4. **Resposta** é renderizada (HTML) ou retornada (HTML)
 
 ---
 
