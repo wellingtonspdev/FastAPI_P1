@@ -96,7 +96,8 @@ projeto_gestao/
 | GET    | `/produtos/[id]`       | Produto específico | ![GET produto](testes_endpoint/GET-produtos[id]-Retornar-o-produto-com-o-ID-especificado.png) |
 | POST   | `/produtos`            | Criação com validação | ![POST produto](testes_endpoint/POST-produtos-Criar-um-novo-produto-(com-validação-de-campos).png) |
 | PUT    | `/produtos/[id]`       | Atualização parcial | ![PUT produto](testes_endpoint/PUT-produtos-[id]-Atualizar-os-dados-de-um-produto-existente-(com-validação-de-campos).png) |
-| DELETE | `/produtos/[id]`       | Exclusão segura | ![DELETE produto](testes_endpoint/DELETE-produtos[id]-Excluir-o-produto-com-o-ID-especificado.png) |
+| DELETE | `/produtos/[id]`       | Exclusão segura | ![DELETE produto]
+![DELETE-produtos{id}-Excluir-o-produto-com-o-ID-especificado](https://github.com/user-attachments/assets/ce47dd12-5409-47d7-9d5b-53b8413fdf14)
 
 ### 👥 Módulo de Usuários
 
