@@ -1,16 +1,20 @@
-# 🚀 Sistema de Gestão de Produtos e Usuários
+# 🚀 Sistema de Gestão de Produtos e Usuários - Relatório Técnico Completo
 
 ![Licença MIT](https://img.shields.io/badge/license-MIT-blue)
-![Versão 1.0](https://img.shields.io/badge/version-1.0-green)
+![Versão 2.0](https://img.shields.io/badge/version-2.0-green)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen)
 
 ## 🏗️ Arquitetura MVC
 
-O sistema foi estruturado seguindo rigorosamente o padrão MVC (Model-View-Controller), proporcionando separação clara de responsabilidades:
+## 📝 Relatório Técnico
 
-### 📦 Camada Model (Models)
+### 1. Arquitetura MVC Implementada
+
+O sistema foi desenvolvido seguindo rigorosamente o padrão **Model-View-Controller (MVC)**, com as seguintes características:
+
+**a) Camada Model (Models)**
 ```python
-# Exemplo: produto_model.py
+# produto_model.py
 class Produto(Base):
     __tablename__ = 'produtos'
     
@@ -20,112 +24,122 @@ class Produto(Base):
     quantidade = Column(Integer, default=0)
     
     @classmethod
-    def buscar_por_id(cls, session, id):
-        return session.query(cls).filter_by(id=id).first()
+    def buscar_por_nome(cls, session, nome):
+        return session.query(cls).filter(Produto.nome.ilike(f'%{nome}%')).all()
 ```
-Responsável por:
-- Interação com o banco de dados MySQL via SQLAlchemy ORM
-- Definição da estrutura das tabelas
-- Métodos de consulta e persistência
+- Responsável pela interação com o banco MySQL via SQLAlchemy ORM
+- Contém toda a estrutura de dados e relações
+- Implementa métodos de busca e filtros complexos
 
-### 🎮 Camada Controller (Controllers)
+**b) Camada Controller (Controllers)**
 ```python
-# Exemplo: produto_controller.py
+# produto_controller.py
 class ProdutoController:
     @staticmethod
-    def criar_produto(session, dados):
-        produto = Produto(
-            nome=dados['nome'],
-            preco=dados['preco'],
-            quantidade=dados.get('quantidade', 0)
-        )
-        session.add(produto)
-        session.commit()
-        return produto
+    def criar_produto_com_validacao(session, dados):
+        try:
+            produto_validado = ProdutoSchema(**dados)
+            produto = Produto(**produto_validado.dict())
+            session.add(produto)
+            session.commit()
+            return produto
+        except ValidationError as e:
+            raise ValueError(str(e))
 ```
-Responsável por:
-- Lógica de negócios
-- Validações básicas
-- Intermediação entre Models e Views
+- Gerencia a lógica de negócios
+- Coordena a comunicação entre Models e Views
+- Implementa validações complexas
 
-### 🖼️ Camada View (Templates)
+**c) Camada View (Templates)**
 ```html
-<!-- Exemplo: templates/produtos/cadastro.html -->
+<!-- produtos/editar.html -->
 {% extends "base.html" %}
 
 {% block content %}
-<form method="POST" action="/produtos/criar">
-    <input type="text" name="nome" required minlength="3">
-    <input type="number" name="preco" step="0.01" min="0" required>
-    <button type="submit">Cadastrar</button>
+<form method="POST" action="/produtos/{{produto.id}}/editar">
+    <input type="text" name="nome" value="{{produto.nome}}" 
+           required minlength="3" maxlength="100">
+    <span class="error">{{erros.nome if erros and erros.nome}}</span>
 </form>
 {% endblock %}
 ```
-Responsável por:
-- Apresentação dos dados
-- Formulários de interação
-- Validações no front-end
+- Responsável pela apresentação dos dados
+- Implementa validações no cliente
+- Exibe feedbacks de erro
 
-## 🔍 Validações em Templates
+### 2. Sistema de Validação Multicamadas
 
-As validações nos templates Jinja2 ocorrem em três níveis:
+Implementamos um sistema robusto de validação em três níveis:
 
-1. **Validação HTML5**:
+**a) Frontend (Templates Jinja2)**
 ```html
-<input type="text" name="nome" required minlength="3" maxlength="100">
+<input type="number" name="preco" step="0.01" min="0.01" required
+       oninvalid="this.setCustomValidity('Preço deve ser positivo')">
 ```
 
-2. **Validação no Backend** (via Pydantic):
+**b) Backend (Pydantic)**
 ```python
 class ProdutoSchema(BaseModel):
-    nome: str = Field(..., min_length=3, max_length=100)
-    preco: float = Field(..., gt=0)
-    quantidade: int = Field(0, ge=0)
+    nome: constr(min_length=3, max_length=100)
+    preco: confloat(gt=0)
+    quantidade: conint(ge=0) = 0
+    
+    @validator('nome')
+    def nome_deve_ter_espaco(cls, v):
+        if ' ' not in v:
+            raise ValueError('Deve conter espaço')
+        return v.title()
 ```
 
-3. **Feedback de Erros**:
-```html
-{% if erro %}
-<div class="alert alert-error">
-    {{ erro }}
-</div>
-{% endif %}
+**c) Banco de Dados (MySQL Constraints)**
+```sql
+CREATE TABLE produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) CHECK (preco > 0),
+    quantidade INT DEFAULT 0 CHECK (quantidade >= 0)
+);
 ```
 
-## 🛣️ Sistema de Rotas
+### 3. Sistema de Rotas Avançado
 
-O roteamento foi implementado com o FastAPI seguindo boas práticas RESTful:
+As rotas foram implementadas com:
 
-### Rotas de Produtos (`produtos_routes.py`)
+**a) Organização Modular**
 ```python
-router = APIRouter(prefix="/produtos")
+# produtos_routes.py
+router = APIRouter(
+    prefix="/produtos",
+    tags=["Produtos"],
+    responses={404: {"description": "Não encontrado"}}
+)
 
 @router.get("/", response_class=HTMLResponse)
 async def listar_produtos(request: Request):
-    produtos = ProdutoController.listar_produtos(request.state.db)
-    return templates.TemplateResponse("produtos/lista.html", {"request": request, "produtos": produtos})
-
-@router.post("/criar")
-async def criar_produto(request: Request):
-    form_data = await request.form()
-    try:
-        ProdutoController.criar_produto(request.state.db, dict(form_data))
-        return RedirectResponse("/produtos", status_code=303)
-    except ValueError as e:
-        return templates.TemplateResponse("produtos/cadastro.html", {"request": request, "erro": str(e)})
+    # Implementação
 ```
 
-### Rotas de Usuários (`usuario_routes.py`)
+**b) Tratamento de Erros**
 ```python
-router = APIRouter(prefix="/usuarios")
-
-@router.get("/{id}")
-async def obter_usuario(id: int):
-    usuario = UsuarioController.obter_por_id(id)
-    if not usuario:
-        raise HTTPException(status_code=404)
-    return usuario
+@router.put("/{id}")
+async def atualizar_produto(id: int, request: Request):
+    try:
+        produto = ProdutoController.atualizar_produto(
+            request.state.db, id, await request.form()
+        )
+        return RedirectResponse(f"/produtos/{id}", status_code=303)
+    except ValueError as e:
+        return mostrar_erro_edicao(request, id, str(e))
 ```
+
+### 4. Desafios e Soluções
+
+| Desafio | Solução Implementada | Código Exemplo |
+|---------|----------------------|----------------|
+| Validação complexa de preços | Implementação de validadores customizados no Pydantic | `@validator('preco') def validar_preco(cls, v): ...` |
+| Sincronização estado do banco | Uso de sessions atômicas e rollback automático | `with session.begin(): ...` |
+| Formulários complexos | Divisão em componentes reutilizáveis | `{% include 'componentes/campo.html' %}` |
+| Performance em listagens | Implementação de paginação lazy | `session.query(Produto).limit(10).offset((pagina-1)*10)` |
 
 ## 🏗️ Estrutura do Projeto
 
@@ -255,7 +269,29 @@ Acesse a API em `http://localhost:8000` e a documentação interativa em `http:/
 
 ---
 
-## 👥 Autores
+Referências Técnicas
+
+1. **Padrão MVC**
+   - [Documentação oficial do FastAPI sobre MVC](https://fastapi.tiangolo.com/advanced/mvc/)
+   - Fowler, M. (2002). *Patterns of Enterprise Application Architecture*. Addison-Wesley.
+
+2. **Validação de Dados**
+   - [Documentação Pydantic](https://pydantic-docs.helpmanual.io/)
+   - [HTML5 Form Validation](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)
+
+3. **Boas Práticas REST**
+   - Fielding, R. (2000). *Architectural Styles and the Design of Network-based Software Architectures* (Dissertation)
+   - [Microsoft REST API Guidelines](https://github.com/microsoft/api-guidelines)
+
+4. **Segurança**
+   - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+   - [SQLAlchemy Security](https://docs.sqlalchemy.org/en/14/security.html)
+
+5. **MySQL e Python**
+   - [MySQL Connector/Python](https://dev.mysql.com/doc/connector-python/en/)
+   - [SQLAlchemy ORM](https://docs.sqlalchemy.org/en/14/orm/)
+
+## 👥 Autores e Contribuições
 
 - [Wellington Siqueira Porto](https://github.com/wellingtonspdev)
 - [Kauã Hiro](https://github.com/kaua-hiro)
