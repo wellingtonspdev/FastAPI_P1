@@ -4,21 +4,128 @@
 ![Versão 1.0](https://img.shields.io/badge/version-1.0-green)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen)
 
-## 📌 Visão Geral
+## 🏗️ Arquitetura MVC
 
-Sistema completo para gerenciamento de produtos e usuários com API RESTful e interface web, desenvolvido em Python com FastAPI e MySQL.
+O sistema foi estruturado seguindo rigorosamente o padrão MVC (Model-View-Controller), proporcionando separação clara de responsabilidades:
 
----
+### 📦 Camada Model (Models)
+```python
+# Exemplo: produto_model.py
+class Produto(Base):
+    __tablename__ = 'produtos'
+    
+    id = Column(Integer, primary_key=True)
+    nome = Column(String(100), nullable=False)
+    preco = Column(Float, nullable=False)
+    quantidade = Column(Integer, default=0)
+    
+    @classmethod
+    def buscar_por_id(cls, session, id):
+        return session.query(cls).filter_by(id=id).first()
+```
+Responsável por:
+- Interação com o banco de dados MySQL via SQLAlchemy ORM
+- Definição da estrutura das tabelas
+- Métodos de consulta e persistência
 
-## 🛠️ Stack Tecnológica
+### 🎮 Camada Controller (Controllers)
+```python
+# Exemplo: produto_controller.py
+class ProdutoController:
+    @staticmethod
+    def criar_produto(session, dados):
+        produto = Produto(
+            nome=dados['nome'],
+            preco=dados['preco'],
+            quantidade=dados.get('quantidade', 0)
+        )
+        session.add(produto)
+        session.commit()
+        return produto
+```
+Responsável por:
+- Lógica de negócios
+- Validações básicas
+- Intermediação entre Models e Views
 
-- **Backend**: FastAPI (Python 3)
-- **Banco de Dados**: MySQL (MySQL Workbench)
-- **ORM**: SQLAlchemy
-- **Templates**: Jinja2
-- **Validação**: Pydantic
+### 🖼️ Camada View (Templates)
+```html
+<!-- Exemplo: templates/produtos/cadastro.html -->
+{% extends "base.html" %}
 
----
+{% block content %}
+<form method="POST" action="/produtos/criar">
+    <input type="text" name="nome" required minlength="3">
+    <input type="number" name="preco" step="0.01" min="0" required>
+    <button type="submit">Cadastrar</button>
+</form>
+{% endblock %}
+```
+Responsável por:
+- Apresentação dos dados
+- Formulários de interação
+- Validações no front-end
+
+## 🔍 Validações em Templates
+
+As validações nos templates Jinja2 ocorrem em três níveis:
+
+1. **Validação HTML5**:
+```html
+<input type="text" name="nome" required minlength="3" maxlength="100">
+```
+
+2. **Validação no Backend** (via Pydantic):
+```python
+class ProdutoSchema(BaseModel):
+    nome: str = Field(..., min_length=3, max_length=100)
+    preco: float = Field(..., gt=0)
+    quantidade: int = Field(0, ge=0)
+```
+
+3. **Feedback de Erros**:
+```html
+{% if erro %}
+<div class="alert alert-error">
+    {{ erro }}
+</div>
+{% endif %}
+```
+
+## 🛣️ Sistema de Rotas
+
+O roteamento foi implementado com o FastAPI seguindo boas práticas RESTful:
+
+### Rotas de Produtos (`produtos_routes.py`)
+```python
+router = APIRouter(prefix="/produtos")
+
+@router.get("/", response_class=HTMLResponse)
+async def listar_produtos(request: Request):
+    produtos = ProdutoController.listar_produtos(request.state.db)
+    return templates.TemplateResponse("produtos/lista.html", {"request": request, "produtos": produtos})
+
+@router.post("/criar")
+async def criar_produto(request: Request):
+    form_data = await request.form()
+    try:
+        ProdutoController.criar_produto(request.state.db, dict(form_data))
+        return RedirectResponse("/produtos", status_code=303)
+    except ValueError as e:
+        return templates.TemplateResponse("produtos/cadastro.html", {"request": request, "erro": str(e)})
+```
+
+### Rotas de Usuários (`usuario_routes.py`)
+```python
+router = APIRouter(prefix="/usuarios")
+
+@router.get("/{id}")
+async def obter_usuario(id: int):
+    usuario = UsuarioController.obter_por_id(id)
+    if not usuario:
+        raise HTTPException(status_code=404)
+    return usuario
+```
 
 ## 🏗️ Estrutura do Projeto
 
