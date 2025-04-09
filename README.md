@@ -110,6 +110,7 @@ projeto_gestao/
 | GET    | `/usuarios`            | Listagem completa |   ![GET-usuarios{id}Retornar-o-usuario-com-o-ID-especificado](https://github.com/user-attachments/assets/a47220a8-4b7a-488c-a374-49d5528032be)
 
 | GET    | `/usuarios/[id]`       | Usuário específico | ![GET usuario](testes_endpoint/GET-usuarios[id]Retornar-o-usuario-com-o-ID-especificado.png) |
+
 | POST   | `/usuarios`            | Registro com validação | ![POST-usuarios-Criar-um-novo-usuario-(com-validação-de-campos)](https://github.com/user-attachments/assets/9a3d1ace-8607-4076-9ece-a9bdb6a94b9e)
 
 | PUT    | `/usuarios/[id]`       | Atualização de perfil |![PUT-usuarios{id}-Atualizar-os-dados-de-um-usuario-existente-(com-validação-de-campos)](https://github.com/user-attachments/assets/f3eee6f7-454a-4764-ae30-eb50c5bea968)
