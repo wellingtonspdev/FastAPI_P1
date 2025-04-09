@@ -91,16 +91,6 @@ class ProdutoSchema(BaseModel):
         return v.title()
 ```
 
-**c) Banco de Dados (MySQL Constraints)**
-```sql
-CREATE TABLE produtos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    preco DECIMAL(10,2) CHECK (preco > 0),
-    quantidade INT DEFAULT 0 CHECK (quantidade >= 0)
-);
-```
-
 ### 3. Sistema de Rotas Avançado
 
 As rotas foram implementadas com:
