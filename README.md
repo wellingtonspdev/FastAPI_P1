@@ -328,7 +328,7 @@ Este endpoint retorna os detalhes de um usuário específico com base no ID forn
 
 Este endpoint permite a exclusão de um usuário do sistema.
 
-![DELETE /usuarios/{id} - Excluir o usuário com o ID especificado](testes_endpoint/DELETE%20-usuarios%7Bid%7D-Excluir%20o%20usuario%20com%20o%20ID%20especificado.png)
+![DELETE /usuarios/{id} - Excluir o usuário com o ID especificado] (testes_endpoint/DELETE-usuarios{id}-Excluir-o-usuario-com-o-ID-especificado.2.png)
 
 #### DELETE /usuarios/{id} - Excluir um usuário (alternativo)
 
