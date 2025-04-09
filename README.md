@@ -92,7 +92,7 @@ projeto_gestao/
 
 | Método | Endpoint               | Casos Testados | Evidência |
 |--------|------------------------|----------------|-----------|
-| GET    | `/produtos`            | Listagem completa | ![GET-produtos-Retornar-todos-os-produto](https://github.com/user-attachments/assets/71b45a3e-6f7b-47fd-8b9b-5a68fe115bdb)
+| GET    | `/produtos`            | Listagem completa |   ![GET-produtos-Retornar-todos-os-produto](https://github.com/user-attachments/assets/71b45a3e-6f7b-47fd-8b9b-5a68fe115bdb)
 
 | GET    | `/produtos/[id]`       | Produto específico | ![GET-produtos{id}-Retornar-o-produto-com-o-ID-especificado](https://github.com/user-attachments/assets/d200e0b9-1e02-4438-9db9-c8c7bd52cfc8)
 
@@ -107,7 +107,7 @@ projeto_gestao/
 
 | Método | Endpoint               | Casos Testados | Evidência |
 |--------|------------------------|----------------|-----------|
-| GET    | `/usuarios`            | Listagem completa | ![GET-usuarios{id}Retornar-o-usuario-com-o-ID-especificado](https://github.com/user-attachments/assets/a47220a8-4b7a-488c-a374-49d5528032be)
+| GET    | `/usuarios`            | Listagem completa |   ![GET-usuarios{id}Retornar-o-usuario-com-o-ID-especificado](https://github.com/user-attachments/assets/a47220a8-4b7a-488c-a374-49d5528032be)
 
 | GET    | `/usuarios/[id]`       | Usuário específico | ![GET usuario](testes_endpoint/GET-usuarios[id]Retornar-o-usuario-com-o-ID-especificado.png) |
 | POST   | `/usuarios`            | Registro com validação | ![POST-usuarios-Criar-um-novo-usuario-(com-validação-de-campos)](https://github.com/user-attachments/assets/9a3d1ace-8607-4076-9ece-a9bdb6a94b9e)
@@ -149,8 +149,8 @@ Acesse a API em `http://localhost:8000` e a documentação interativa em `http:/
 
 ## 👥 Autores
 
-- [Autor 1](https://github.com/autor1)
-- [Autor 2](https://github.com/autor2)
+- [Autor 1](https://github.com/wellingtonspdev)
+- [Autor 2](https://github.com/kaua-hiro)
 
 ---
 
