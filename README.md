@@ -92,28 +92,28 @@ projeto_gestao/
 
 | Método | Endpoint               | Casos Testados | Evidência |
 |--------|------------------------|----------------|-----------|
-| GET    | `/produtos`            | Listagem completa |   ![GET-produtos-Retornar-todos-os-produto](https://github.com/user-attachments/assets/71b45a3e-6f7b-47fd-8b9b-5a68fe115bdb)
+| GET    | `/produtos`            | Listagem completa |   ![GET-produtos-Retornar-todos-os-produto](https://github.com/user-attachments/assets/71b45a3e-6f7b-47fd-8b9b-5a68fe115bdb) |
 
-| GET    | `/produtos/[id]`       | Produto específico | ![GET-produtos{id}-Retornar-o-produto-com-o-ID-especificado](https://github.com/user-attachments/assets/d200e0b9-1e02-4438-9db9-c8c7bd52cfc8)
+| GET    | `/produtos/[id]`       | Produto específico | ![GET-produtos{id}-Retornar-o-produto-com-o-ID-especificado](https://github.com/user-attachments/assets/d200e0b9-1e02-4438-9db9-c8c7bd52cfc8) |
 
 | POST   | `/produtos`            | Criação com validação | ![POST-usuarios-Criar-um-novo-usuario-(com-validação-de-campos)](https://github.com/user-attachments/assets/5f43d9be-0c0b-4240-951a-a14862b962e9)
 
-| PUT    | `/produtos/[id]`       | Atualização parcial | ![PUT-produtos-{id}-Atualizar-os-dados-de-um-produto-existente-(com validação de campos)](https://github.com/user-attachments/assets/d8459042-ef72-4f58-813c-125c53428aa1)
+| PUT    | `/produtos/[id]`       | Atualização parcial | ![PUT-produtos-{id}-Atualizar-os-dados-de-um-produto-existente-(com validação de campos)](https://github.com/user-attachments/assets/d8459042-ef72-4f58-813c-125c53428aa1) |
 
-| DELETE | `/produtos/[id]`       | Exclusão segura | ![DELETE-produtos{id}-Excluir-o-produto-com-o-ID-especificado](https://github.com/user-attachments/assets/48ff4241-6c9e-416d-9578-38a662ca464d)
+| DELETE | `/produtos/[id]`       | Exclusão segura | ![DELETE-produtos{id}-Excluir-o-produto-com-o-ID-especificado](https://github.com/user-attachments/assets/48ff4241-6c9e-416d-9578-38a662ca464d) |
 
 
 ### 👥 Módulo de Usuários
 
 | Método | Endpoint               | Casos Testados | Evidência |
 |--------|------------------------|----------------|-----------|
-| GET    | `/usuarios`            | Listagem completa |   ![GET-usuarios{id}Retornar-o-usuario-com-o-ID-especificado](https://github.com/user-attachments/assets/a47220a8-4b7a-488c-a374-49d5528032be)
+| GET    | `/usuarios`            | Listagem completa |   ![GET-usuarios{id}Retornar-o-usuario-com-o-ID-especificado](https://github.com/user-attachments/assets/a47220a8-4b7a-488c-a374-49d5528032be) |
 
-| GET    | `/usuarios/[id]`       | Usuário específico | ![GET usuario](testes_endpoint/GET-usuarios[id]Retornar-o-usuario-com-o-ID-especificado.png) |
+| GET    | `/usuarios/[id]`       | Usuário específico |![GET-usuarios{id}Retornar-o-usuario-com-o-ID-especificado](https://github.com/user-attachments/assets/d85ff2d6-6aa6-47b2-bd5d-1b7399a4c05a) |
 
-| POST   | `/usuarios`            | Registro com validação | ![POST-usuarios-Criar-um-novo-usuario-(com-validação-de-campos)](https://github.com/user-attachments/assets/9a3d1ace-8607-4076-9ece-a9bdb6a94b9e)
+| POST   | `/usuarios`            | Registro com validação | ![POST-usuarios-Criar-um-novo-usuario-(com-validação-de-campos)](https://github.com/user-attachments/assets/9a3d1ace-8607-4076-9ece-a9bdb6a94b9e) |
 
-| PUT    | `/usuarios/[id]`       | Atualização de perfil |![PUT-usuarios{id}-Atualizar-os-dados-de-um-usuario-existente-(com-validação-de-campos)](https://github.com/user-attachments/assets/f3eee6f7-454a-4764-ae30-eb50c5bea968)
+| PUT    | `/usuarios/[id]`       | Atualização de perfil |![PUT-usuarios{id}-Atualizar-os-dados-de-um-usuario-existente-(com-validação-de-campos)](https://github.com/user-attachments/assets/f3eee6f7-454a-4764-ae30-eb50c5bea968) |
 
 | DELETE | `/usuarios/[id]`       | Remoção de conta | ![DELETE usuario](teste_endpoint/DELETE-usuarios{id}-Excluir-o-usuario-com-o-ID-especificado.png) |
 
