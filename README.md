@@ -106,14 +106,14 @@ projeto_gestao/
 | GET    | `/usuarios/[id]`       | Usuário específico | ![GET usuario](testes_endpoint/GET-usuarios[id]Retornar-o-usuario-com-o-ID-especificado.png) |
 | POST   | `/usuarios`            | Registro com validação | ![POST usuario](testes_endpoint/POST-usuarios-Criar-um-novo-usuario-(com-validação-de-campos).png) |
 | PUT    | `/usuarios/[id]`       | Atualização de perfil | ![PUT usuario](testes_endpoint/PUT-usuarios[id]-Atualizar-os-dados-de-um-usuario-existente-(com-validação-de-campos).png) |
-| DELETE | `/usuarios/[id]`       | Remoção de conta | ![DELETE usuario](testes_endpoint/DELETE-usuarios[id]-Excluir-o-usuario-com-o-ID-especificado.png) |
+| DELETE | `/usuarios/[id]`       | Remoção de conta | ![DELETE usuario](teste_endpoint/DELETE-usuarios{id}-Excluir-o-usuario-com-o-ID-especificado.png) |
 
 ---
 
 ## 🚀 Como Executar
 
 1. **Pré-requisitos**:
-   - Python 3.8+
+   - Python 3
    - MySQL Server
    - MySQL Workbench
 
@@ -146,12 +146,6 @@ Acesse a API em `http://localhost:8000` e a documentação interativa em `http:/
 
 ---
 
-## 📄 Licença
-
-Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
----
-
 <div align="center">
-  Desenvolvido com Python 🐍 e FastAPI ⚡ | 2023
+  Desenvolvido com Python 🐍 e FastAPI ⚡ 
 </div>
